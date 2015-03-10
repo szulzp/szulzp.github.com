@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery制作网页选项卡</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; maximum-scale=1.0;" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta name="format-detection" content="address=no;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="jQuery特效 网页选项卡 选项卡" />
+	<meta name="description" content="jQuery制作网页选项卡" />
+	<meta name="author" content="Pang Lin" />
+<link href="css/General.css" rel="stylesheet" type="text/css">
+<link href="css/Content.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
+<!--[if lt IE 9]>
+   <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
+<![endif]-->
+</head>
+<style>
+body{
+	background:#EEEDED;
+	box-sizing:content;
+	outline:none;
+	font-family:'微软雅黑';
+}	
+
+a{
+	text-decoration:underline;
+}
+textarea{
+	display:inline;
+	width:90%;
+	height:400px;
+	margin:10px 0 10px 50px;
+	background:#eee;
+}
+
+textarea[id=textarea2]{
+	height:350px;
+}
+textarea[id=textarea3]{
+	height:165px;
+}
+</style>
+
+<body onload="window.location.href='content03.html#content'">
+<!-- Header -->
+<header class="header" id="header">
+	<div class="mask">
+		<div class="circle">
+			<div class="circle-mask" title="Hi!I'm Pang Lin" onclick="javascript:history.back()">
+			</div>
+		</div>
+		<span lang="a">Working hard for the weak | 因弱小而努力。 </span>
+		<span lang="b">If interested in me , contact me! | 我十分愿意跟你交朋友</span>
+	</div>
+</header>
+
+<a href="#" id="content"></a>
+<!-- Content -->
+<article class="article">
+		<h1>jQuery制作网页选项卡</h1>
+		<hr>
+		<h2>2015-03-08</h2>
+		<h3>前端</h3>
+	<div class="word">
+		<p>选项卡一直都是网页常用的效果，今天就尝试下用jQuery写，写法非常简单，用each（）遍历就能实现自动获取选项卡的数量，并利用sibling().hide()让显示部分的div的兄弟div隐藏</p>
+		<p>CSS样式:</p>
+		<textarea id="textarea1">
+body{
+	font-size:13px;
+}
+
+ul,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+#menu li{
+	text-align:center;
+	float:left;
+	padding:5px;
+	margin-right:2px;
+	width:50px;
+	cursor:pointer;
+}
+
+	#menu li.tabFocus{
+		width:50px;
+		font-weight:bold;
+		background:#f3f2e7;
+		border:solid 1px #666;
+		border-bottom:0;
+		z-index:100;
+		position:relative;
+	}
+	
+#content{
+	width:260px;
+	height:200px;
+	padding:10px;
+	background:#f3f2e7;
+	clear:left;
+	border:solid 1px #666;
+	position:relative;
+	top:-1px;
+}
+
+	#content div{
+		display:none;
+	}
+	
+		#content div.conFocus{
+			display:block;
+		}			
+		</textarea>
+		<p>body体内html代码:</p>
+		<textarea id="textarea2">
+<body>
+	<ul id="menu">
+		<li class="tabFocus">家具</li>
+		<li>电器</li>
+		<li>二手</li>
+	</ul>
+	<ul id="content">
+		<!-- 显示列表 -->
+		<div class="conFocus">
+			<ul>
+				<li>A</li>
+				<li>A</li>
+			</ul>
+		</div>
+		<!-- 显示图片 -->
+		<div>
+			<img src="1.jpg" alt="" style="width:240px" />
+		</div>
+		<!-- 显示文本 -->
+		<div>二手市场，产品丰富多彩</div>
+	</ul>
+</body>		
+		</textarea>
+		<p>jquery代码:</p>
+		<textarea id="textarea3">
+	$(function(){
+		$("#menu li").each(function(index){//遍历li
+			$(this).click(function(){//点击li标签
+				$("#menu li.tabFocus").removeClass("tabFocus");//移除样式.tabFocus
+				$(this).addClass("tabFocus");//为点击的li标签添加样式.tabFocus
+				$("#content div:eq("+index+")").show()
+				.siblings().hide();//显示li对应的div，其兄弟标签隐藏
+			})
+		})
+	})
+		</textarea>
+		<p>近期发现each（）遍历太有用了，jQuery AJAX也是需要这个方法去实现循环输出的。</p>
+		<p>下载源码：<a href="../files/jQuery实现选项卡.zip">jQuery实现选项卡.zip</a></p>
+	</div>
+</article>
+
+</body>
+</html>

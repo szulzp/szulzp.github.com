@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery制作网页选项卡</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; maximum-scale=1.0;" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta name="format-detection" content="address=no;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="jQuery特效 网页选项卡 选项卡" />
+	<meta name="description" content="jQuery制作网页选项卡" />
+	<meta name="author" content="Pang Lin" />
+<link href="css/General.css" rel="stylesheet" type="text/css">
+<link href="css/Content.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
+<!--[if lt IE 9]>
+   <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
+<![endif]-->
+</head>
+<style>
+body{
+	background:#EEEDED;
+	box-sizing:content;
+	outline:none;
+	font-family:'微软雅黑';
+}	
+
+a{
+	text-decoration:underline;
+}
+textarea{
+	display:inline;
+	width:90%;
+	height:400px;
+	margin:10px 0 10px 50px;
+	background:#eee;
+}
+
+textarea[id=textarea3]{
+	height:165px;
+}
+</style>
+
+<body onload="window.location.href='content04.html#content'">
+<!-- Header -->
+<header class="header" id="header">
+	<div class="mask">
+		<div class="circle">
+			<div class="circle-mask" title="Hi!I'm Pang Lin" onclick="javascript:history.back()">
+			</div>
+		</div>
+		<span lang="a">Working hard for the weak | 因弱小而努力。 </span>
+		<span lang="b">If interested in me , contact me! | 我十分愿意跟你交朋友</span>
+	</div>
+</header>
+
+<a href="#" id="content"></a>
+<!-- Content -->
+<article class="article">
+		<h1>仿京东首页商品分类</h1>
+		<hr>
+		<h2>2015-03-08</h2>
+		<h3>前端</h3>
+	<div class="word">
+		<p>京东的商品菜单最大的亮点应该是子菜单和父菜单是连体的，形成一个手枪的形态，阴影效果也是不间断的，一开始也在思考怎么做到这种效果，不应该是用图片的，后面理解了，应该是在两个div链接处放了一个白色背景的div小块连接住，高度和父菜单同高即可。</p>
+		<p>CSS代码：</p>
+		<textarea>
+	body{
+		font-size:13px;
+		margin:0;
+		padding:0;
+	}
+	ul,li{
+		list-style:none;
+		font-size:16px;
+		line-height:30px;
+		
+	}
+	.menu{
+		width:190px;
+		border:2px solid #E4393C;
+	}
+	.optn{
+		margin-left:-10px;
+		
+	}
+	.content{
+		clear:left;
+		margin-left:-30px;
+		margin-top:-10px;
+	}
+	a{
+		text-decoration:none;
+		color:#666;
+		padding:10px;
+	}
+	.optnFocus{
+		display:block;
+		width:190px;
+		font-weight:bold;
+		background-color:#fff;
+		box-shadow:1px 1px 5px 2px rgba(0,0,0, .2);	
+	}
+	div{
+		padding:10px;
+	}
+	span{
+		display:block;
+		width:190px;height:40px;
+		font-size:14px;
+		font-weight:bold;
+		color:#fff;
+		line-height:40px;
+		background-color:#E4393C;
+		text-align:center;
+		margin-top:-10px;
+		margin-left:-10px;
+	}
+	.tip{
+		width:300px;
+		position:absolute;
+		padding:10px;
+		background:#fff;
+		box-shadow:1px 1px 5px 2px rgba(0,0,0, .2);
+		margin-left:37px;
+		display:none;
+	}
+	.tip li{
+		line-height:23px;
+		border-bottom:1px dashed rgba(0,0,0,0.4);
+	}
+	.mask{
+		position:absolute;
+		width:10px;
+		height:30px;
+		background:#fff;
+		z-index:9999;
+		margin-left:-15px;
+		margin-top:-10px;
+		padding:0;
+	}			
+		</textarea>
+		<p>HTML代码：</p>
+		<textarea>
+<body>
+	<ul>
+		<li class="menu">
+			<div>
+				<span>全部商品分类</span>
+			</div>
+			<ul class="content">
+				<li class="optn"><a href="#">笔记本</a></li>
+				<ul class="tip">
+					<div class="mask"></div>
+					<li><a href="#">笔记本1</a></li>
+					<li><a href="#">笔记本2</a></li>
+					<li><a href="#">笔记本3</a></li>
+					<li><a href="#">笔记本4</a></li>
+					<li><a href="#">笔记本5</a></li>
+				</ul>
+				<li class="optn"><a href="#">移动硬盘</a></li>
+				<ul class="tip">
+					<div class="mask"></div>
+					<li><a href="#">移动硬盘1</a></li>
+					<li><a href="#">移动硬盘2</a></li>
+					<li><a href="#">移动硬盘3</a></li>
+					<li><a href="#">移动硬盘4</a></li>
+					<li><a href="#">移动硬盘5</a></li>
+				</ul>
+				<li class="optn"><a href="#">电脑软件</a></li>
+				<ul class="tip">
+					<div class="mask"></div>
+					<li><a href="#">电脑软件1</a></li>
+					<li><a href="#">电脑软件2</a></li>
+					<li><a href="#">电脑软件3</a></li>
+					<li><a href="#">电脑软件4</a></li>
+					<li><a href="#">电脑软件5</a></li>
+				</ul>				
+				<li class="optn"><a href="#">数码产品</a></li>
+				<ul class="tip">
+					<div class="mask"></div>
+					<li><a href="#">数码产品1</a></li>
+					<li><a href="#">数码产品2</a></li>
+					<li><a href="#">数码产品3</a></li>
+					<li><a href="#">数码产品4</a></li>
+					<li><a href="#">数码产品5</a></li>
+				</ul>
+			</ul>
+		</li>
+	</ul>
+</body>
+		</textarea>
+		<p>jQuery代码：</p>
+		<textarea>
+<script>
+	$(function(){
+		var curY;//父菜单项离顶部距离
+		var curH;//父菜单项高度
+		var curW;//父菜单项宽度
+		var objL;
+		function setInitValue(obj){//初始化变量数值
+			curY=obj.offset().top;
+			curH=obj.height();
+			curW=obj.width();
+		}	
+			
+		$(".optn").mouseover(function(){//鼠标移动到父菜单项效果
+			objL=$(this);
+			setInitValue(objL);
+			var allY=curY+"px";//子菜单项高度等于父菜单项高度
+			objL.addClass("optnFocus");
+			objL.next("ul").show().css({"top":allY,"left":curW})//显示子菜单项
+		})
+		
+		.mouseout(function(){//鼠标移开父菜单项效果
+			$(this).removeClass("optnFocus");
+			$(this).next("ul").hide();//隐藏子菜单项
+		})
+		
+		$(".tip").mousemove(function(){//鼠标移到子菜单项效果
+			$(this).show();
+			objL=$(this).prev("li");//查询到子菜单项的父菜单项
+			setInitValue(objL);
+			objL.addClass("optnFocus");//保证鼠标移到子菜单项上时父菜单项不会失去样式optnFocus
+		})
+		
+		.mouseout(function(){//鼠标移开子菜单项效果
+			$(this).hide();
+			$(this).prev("li").removeClass("optnFocus");
+		})
+		
+	})
+</script>
+		</textarea>
+		<p>不过有些遗憾的是写得匆忙，子菜单项的距离调整后来用css改了下，等于不是完全用jQuery去控制，不过也是可以写的，只是需要一点点的调整，有些困难，感兴趣的朋友可以参考源码进行尝试，做一个真正意义上的商品分类栏。</p>
+		<p>下载源码：<a href="../files/仿京东首页商品分类.zip">仿京东首页商品分类.zip</a></p>
+	</div>
+</article>
+
+</body>
+</html>

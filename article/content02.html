@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>仿360浏览器图片放大效果</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; maximum-scale=1.0;" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta name="format-detection" content="address=no;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="jQuery特效 图片放大器" />
+	<meta name="description" content="仿360浏览器图片放大器效果" />
+	<meta name="author" content="Pang Lin" />
+<link href="css/General.css" rel="stylesheet" type="text/css">
+<link href="css/Content.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
+<!--[if lt IE 9]>
+   <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
+<![endif]-->
+</head>
+<style>
+body{
+	background:#EEEDED;
+	box-sizing:content;
+	outline:none;
+	font-family:'微软雅黑';
+}	
+
+a{
+	text-decoration:underline;
+}
+textarea{
+	display:inline;
+	width:90%;
+	height:400px;
+	margin:10px 0 10px 50px;
+	background:#eee;
+}
+textarea[id=textarea1]{
+	height:220px;
+}
+textarea[id=textarea3]{
+	height:240px;
+}
+</style>
+
+<body onload="window.location.href='content02.html#content'">
+<!-- Header -->
+<header class="header" id="header">
+	<div class="mask">
+		<div class="circle">
+			<div class="circle-mask" title="Hi!I'm Pang Lin" onclick="javascript:history.back()">
+			</div>
+		</div>
+		<span lang="a">Working hard for the weak | 因弱小而努力。 </span>
+		<span lang="b">If interested in me , contact me! | 我十分愿意跟你交朋友</span>
+	</div>
+</header>
+
+<a href="#" id="content"></a>
+<!-- Content -->
+<article class="article">
+		<h1>仿360浏览器图片放大器效果</h1>
+		<hr>
+		<h2>2015-03-05</h2>
+		<h3>前端</h3>
+	<div class="word">
+		<p>这段时间一直在学习jQuery，发现jQuery真的是很强大呀，相较javascript简化了大量的代码，真是再一次佩服大神们呀！这是自己第一次分享自己的jQuery源码，或多或少还是有点小激动的，不过自己也不是大神，没能写出什么高大上的东西，不过我会继续不断深造，争取分享一些有质量的前端源码。</p>
+		<p>今天分享的是一个仿360浏览器图片放大器效果用jQuery如何制作。网页微博上鼠标只要移动到图片上，360浏览器自带的图片放大功能就会让图片加载放大，若加载不给力就会一直出现加载中提示，这种效果还是非常棒的，体验来说还是很不错，特别是我这种懒人而言（连点个鼠标都觉得麻烦呀）。</p>
+		<p>当然我是抱着共同学习的心态，所以我在这里会详细的一步步告诉大家如何实现，让更多跟我一样是入门小白的可以更好的理解。</p>
+		<p>①我们现在需要准备若干张图片和一张加载中的gif图片（大家也可以下载我准备好的素材：<a href="files/仿360图片放大器效果.zip">图片素材及源码文件</a>）</p>
+		<p>②现在我们就新建一个html文档，并在body中敲入如下代码（我个人不太建议直接复制，我一直坚持自己手工输入才能学得更多）
+<textarea id="textarea1">
+<div class="Simg">
+	<ul>
+		<li><img src="img/1.jpg" alt="" /></li>
+		<li><img src="img/2.jpg" alt="" /></li>
+		<li><img src="img/3.jpg" alt="" /></li>
+		<li><img src="img/4.jpg" alt="" /></li>
+		<li><img src="img/5.jpg" alt="" /></li>
+		<li><img src="img/6.jpg" alt="" /></li>
+		<li><img src="img/7.jpg" alt="" /></li>
+		<li><img src="img/8.jpg" alt="" /></li>
+	</ul>
+</div>//九宫格的小图片效果
+<img id="imgTip" class="zoom" src="img/loading.gif" />//放置放大图片的div容器，默认图片是加载中的gif图片
+</textarea>
+		</p>
+		<p>写完了body中的内容，我们开始定义样式吧，因为是展示，我就不分离文件单独写css文件了，但是这个要强调下，网页作品html/css/js一定要尽量分离成单独的文件，比较重要的原因是网页加载会更快些，另外还有一个大部分人不知道的是分离单独文件更加方便搜索引擎收录和搜索。其实样式非常的简单，我这里也希望你可以根据上述html代码完成css样式，做出九宫格效果即可。（我写样式习惯按级换行排版，方便我后期修改方便）
+<textarea id="textarea2">
+body{
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+.Simg{
+	width:300px;
+	height:300px;
+	margin:0 auto;
+	margin-top:60px;
+}
+
+	.Simg ul{
+		width:100%;
+		list-style:none;
+	}
+	
+		.Simg ul li{
+			width:100px;
+			height:100px;
+			float:left;
+			overflow:hidden;
+			cursor:pointer;
+		}
+		
+			.Simg ul li img{
+				height:100%;
+			}
+
+.zoom{
+	position:absolute;
+	border:1px solid #ccc;
+	width:32px;
+	height:auto;
+	padding:3px;
+	background-color:#eee;
+	display:none;
+}
+</textarea>	
+		</p>
+		<p>现在我们已经完成了页面的设计工作了，接下来就是jQuery的操作了，当然这里就是难点了，但是不怕，我们先看jQuery的代码。
+<textarea id="textarea3">
+	$(function(){
+	//小图片鼠标移动事件
+		var x=5;var y=15;
+		$("ul li img").mousemove(function(e){
+			$("#imgTip").attr("src",this.src).css({"top":(e.pageY+y)+"px","left":(e.pageX+x)+"px","width":"300"}).show(250);//图片放大效果
+		})
+		
+	//小图片鼠标移开事件
+		$("ul li img").mouseout(function(){
+			$("#imgTip").hide();
+		})
+	})
+</textarea>	
+		</p>
+		<p>我先解释下：</p>
+		<p>=>我定义了x,y是为了放大的图片在小图片右5像素，下15个像素</p>
+		<p>=>当鼠标移动到图片上时，发生事件（参数e是传入小图片的属性）</p>
+		<p>=>放大图片容器先改变其图片路径（.attr()方法操作元素属性），再修改重定义了其样式（.css()方法操作元素css样式，e.pageX取得相应小图片在页面中的高度），再经过250ms弹出图片（.show()决定效果过渡时间，你可以自定义设置）</p>
+		<p>=>定义鼠标离开动作，图片容器消失</p>
+		<p>不知道大家明白了没，原理是非常简单的，难点就是参数e，没有参数e，你图片放大效果的位置就只能固定在某处了，不能跟随鼠标位置变化而改变了。面向对象的知识，对于javascript和jQuery的理解也是非常重要的，如果不太理解面向对象的童鞋，务必搜索了解！</p>
+		<p>最后祝大家进步，大家一起共同努力吧！</p>
+		<br>
+		<p>源码下载：<a href="../files/仿360图片放大效果.zip">仿360图片放大器效果.zip</a></p>
+	</div>
+</article>
+
+</body>
+</html>
