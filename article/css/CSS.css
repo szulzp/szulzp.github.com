@@ -1,5 +1,36 @@
 @charset "utf-8";
 /*
+** Gototop
+*/
+#gotop{
+	position:fixed;
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	background:url(images/top.jpg) no-repeat;
+	background-position:center;
+	background-size:50px 50px;
+	z-index:9999;
+	right:30px;
+	bottom:30px;
+	box-shadow:0px 1px 20px 1px rgba(0,0,0, .3);
+	/*transition*/
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	transition: all 0.4s linear;
+	cursor:pointer;
+	opacity:0.6;
+	filter:alpha(opacity=60);
+}
+
+#gotop:hover{
+	opacity:1.0;
+	filter:alpha(opacity=99);
+	box-shadow:0px 1px 20px 1px rgba(0,0,0, .4);
+}
+/*
 ** Span
 */
 span{
@@ -201,6 +232,7 @@ span{
 	margin-top:8px;
 	margin-left:5px;
 }
+
 @media screen and (min-width:1024px){
 	span[lang="a"]{
 	color:#fff;
@@ -215,6 +247,8 @@ span{
 	line-height:1.2em;
 	margin-top:10px;
 }
+
+
 /*
 ** Header
 */

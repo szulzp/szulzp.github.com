@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery实现焦点图</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; maximum-scale=1.0;" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta name="format-detection" content="address=no;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="jQuery 焦点图 " />
+	<meta name="description" content="深大泽鹏的个人博客，希望对Web感兴趣的伙伴可以联系我一同学习交流" />
+	<meta name="author" content="Pang Lin" />
+<link href="css/General.css" rel="stylesheet" type="text/css">
+<link href="css/Content.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
+<!--[if lt IE 9]>
+   <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
+<![endif]-->
+</head>
+<style>
+body{
+	background:#EEEDED;
+	box-sizing:content;
+	outline:none;
+	font-family:'微软雅黑';
+}	
+
+a{
+	text-decoration:underline;
+}
+textarea{
+	display:inline;
+	width:90%;
+	height:400px;
+	margin:10px 0 10px 50px;
+	background:#eee;
+}
+
+textarea[id="t1"]{
+	height:165px;
+}
+</style>
+
+<body onload="window.location.href='content06.html#content'">
+<!-- Header -->
+<header class="header" id="header">
+	<div class="mask">
+		<div class="circle">
+			<div class="circle-mask" title="Hi!I'm Pang Lin" onclick="location.href='http://szulzp.github.io/index.html'">
+			</div>
+		</div>
+		<span lang="a">Working hard for the weak | 因弱小而努力。 </span>
+		<span lang="b">If interested in me , contact me! | 我十分愿意跟你交朋友</span>
+	</div>
+</header>
+
+<a href="#" id="content"></a>
+<!-- Content -->
+<article class="article">
+		<h1>jQuery实现焦点图</h1>
+		<hr>
+		<h2>2015-03-13</h2>
+		<h3>前端</h3>
+	<div class="word">
+		<p>昨天面试的时候，对方问到了如何编写焦点图，当时回答得也很简单，图片设置float浮动，容器设置overflow：hidden，再用脚本控制图片位置。其实用js写焦点图是有些困难的，因为要实现图片移动效果slide还需要另外写一个slide.js插件。用jQuery的animate()就很好的解决了这个问题。那今天就试着用jQuery写一个焦点图，带左右键切换效果。</p>
+		<p>其中的难点应该是最后一张图片结束后，怎么接回第一张图片继续循环切换，还有的就是left的距离。解决这两点，用jQuery写焦点图基本是没有困难的了。</p>
+		<p>HTML代码</p>
+		<textarea id="t1">
+<div class="focus">
+	<div id="pre"></div>
+	<div id="next"></div>
+	<ul class="bigpic">
+      <li><a href="#"><img src="img/img6.jpg" border="0"></a></li>
+      <li><a href="#"><img src="img/img7.jpg" border="0"></a></li>
+      <li><a href="#"><img src="img/img8.jpg" border="0"></a></li>
+      <li><a href="#"><img src="img/img9.jpg" border="0"></a></li>
+    </ul>
+</div>
+		</textarea>
+		<p>CSS代码</p>
+		<textarea>
+body,ul,li{ 
+	margin:0; 
+	padding:0
+}
+
+ul,li{
+	list-style:none;
+}
+
+.focus{ 
+	margin:0 auto; 
+	height:320px; 
+	width:975px; 
+	overflow:hidden; 
+	position:relative; 
+}
+
+	.focus .bigpic{ 
+		position:absolute;
+	}
+	
+		.focus .bigpic li{ 
+			width:980px;
+			float:left;
+			padding:0;
+		}
+		
+	.focus .btn{ 
+		overflow:hidden; 
+		height:30px;
+		position:absolute; 
+		bottom:3px; 
+		left:42%; 
+	}
+	
+		.focus .btn li{ 
+			float:left; 
+			margin:0 10px; 
+			padding:5px; 
+			cursor:pointer; 
+			background:#fff;
+			border-radius:50%; 
+			height:6px; 
+			width:6px; 
+			overflow:hidden; 
+			text-align:center; 
+			line-height:12px;
+			opacity:0.6;
+			filter:alpha(opacity=0);
+		}
+		
+			.focus .btn li.on{ 
+				opacity:1.0;
+				filter:alpha(opacity=99);
+			}
+	
+	.focus #pre{
+		position:absolute;
+		width:50px;
+		height:50px;
+		background:url(img/left.png) no-repeat;
+		background-position:center;
+		z-index:9999;
+		margin-top:135px;
+		cursor:pointer;
+	}
+	
+	.focus #next{
+		position:absolute;
+		width:50px;
+		height:50px;
+		background:url(img/right.png) no-repeat;
+		background-position:center;
+		z-index:9999;
+		margin-top:135px;
+		margin-left:920px;
+		cursor:pointer;
+	}
+		</textarea>
+		<p>jquery代码</p>
+		<textarea>
+	$(function(){
+		var $li=$(".bigpic li");
+		var num=$li.length;//获取图片数量
+		var fwidth=$li.width();//获取图片容器li宽度
+		var sec=4000;//自动切换时间设置
+		
+		var btn='<ul class="btn"><li class="on"></li>';
+		var btnend="</ul>";
+		for(i=2;i<=num;i++){
+			btn+="<li></li>";
+		}
+		btn+=btnend;
+		if(num==1){
+			btn=null;
+		}
+		
+		$(".focus").append(btn);//添加btn按钮
+		//鼠标移动事件
+		$(".bigpic").css("width",fwidth*num);
+		$(".btn li").bind("mouseover",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			var i=$(".btn li").index(this);
+			var marginL=fwidth*i;
+			$(".bigpic").animate({"left":-marginL},500);
+		})
+		
+		//设置时间事件，实现焦点图自动切换
+		picTimer=setInterval(next,sec);
+		function next(){
+			var j=$(".btn li").index($(".on"));
+			var timew=fwidth*(j+1);
+			if(j==num-1){
+				$(".btn li").eq(0).addClass("on").siblings().removeClass("on");
+				$(".bigpic").animate({"left":0},500);
+			}else{
+				$(".btn li").eq(j+1).addClass("on").siblings().removeClass("on");
+				$(".bigpic").animate({"left":-timew},500);
+			}
+		}
+		
+		//向前切换事件
+		function pre(){
+			var z=$(".btn li").index($(".on"));
+			var prew=fwidth*(z-1);
+			if(z==0){//不前进图片，什么都不写
+			}else{
+				$(".btn li").eq(z-1).addClass("on").siblings().removeClass("on");
+				$(".bigpic").animate({"left":-prew},500);				
+			}
+		}
+		
+		//鼠标移至图片 时间事件
+		$(".focus").mouseover(function(){
+			clearInterval(picTimer);
+		})
+		.mouseover(function(){
+			picTimer=setInterval(next,sec);
+		})
+		
+		//前进事件
+		$("#next").click(function(){
+			clearInterval(picTimer);
+			next();
+		})
+		
+		//后退事件
+		$("#pre").click(function(){
+			clearInterval(picTimer);
+			pre();
+		})
+	})
+		</textarea>
+		<p>下载源码：<a href="../files/jQuery实现焦点图.zip">jQuery实现焦点图.zip</a></p>
+	</div>
+</article>
+
+</body>
+</html>
