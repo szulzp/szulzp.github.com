@@ -27,15 +27,31 @@ body{
 		
 </style>
 <script>
-	$(document).ready(function(){
+	$(function(){
 		$('.header').ready(function(){
 			$('.mask').animate({backgroundSize:'120%'},2000)
 		});
 	});
+	
+	$(function(){
+		$(window).scroll(function(){
+			if($(window).scrollTop()>400){
+				$("#gotop").fadeIn(200);
+			}else{
+				$("#gotop").fadeOut(200);
+			}
+		});
+		
+		$("#gotop").click(function(){
+			$('body,html').animate({scrollTop:390},500);
+			return false;
+		})
+	})
 </script>
 <div id='wx_pic' style='margin:0 auto;display:none;'>
 	<img src="images/wx.jpg" />
 </div>
+<a href="#top"><div id="gotop"></div></a>
 <body>
 <!-- Header -->
 <header class="header">
@@ -50,10 +66,10 @@ body{
 </header>
 
 <!-- Content -->
-<article class="article">
+<article class="article" id="top">
 	<hgroup class="hgroup">
 		<div class="notice">
-			<span lang="e">我是一名对互联网感兴趣的大学生，正在努力关注着<b>Web前端、摄影和设计</b>。如果你也对此感兴趣，欢迎联系我一同探讨。</span>
+			<span lang="e">我是一名对互联网感兴趣的大学生，正在努力关注着<b>Web前端</b>。如果你也对此感兴趣，欢迎联系我一同探讨。</span>
 		</div>		
 		<div class="info">
 			<ul>
@@ -69,6 +85,18 @@ body{
 	</hgroup>
 	<aside class="aside">
 		<div class="content">
+			<h1><a href="article/content06.html">jQuery实现焦点图</a></h1>
+			<span lang="g">
+			昨晚面试问到了焦点图的实现方式，既然是学习前端的，没用js或者jQuery写一个焦点图确实不是一件光荣的事情，那今天就用jQuery实现焦点图效果吧。
+			</span>
+			<div class="bottom">
+				<span lang="h">前端</span>
+				<span lang="j"><a href="article/content06.html">阅读全文</a></span>				
+				<span lang="i">2015/03/13</span>
+			</div>
+		</div>
+		
+		<div class="content">
 			<h1><a href="article/content05.html">阿里实习生面试</a></h1>
 			<span lang="g">
 			今天结束了阿里的第一轮电话面试，和一同电话面试的舍友张翔体验完面试后，决定各自都写下感受和总结，一方面是记录下来，另外也是希望自己系的师弟师妹可以在大三那一年尝试下。
@@ -79,7 +107,6 @@ body{
 				<span lang="i">2015/03/12</span>
 			</div>
 		</div>
-		
 		<div class="content">
 			<h1><a href="article/content04.html">仿京东首页商品分类</a></h1>
 			<span lang="g">
