@@ -35,7 +35,7 @@ body{
 	
 	$(function(){
 		$(window).scroll(function(){
-			if($(window).scrollTop()>400){
+			if($(window).scrollTop()>600){
 				$("#gotop").fadeIn(200);
 			}else{
 				$("#gotop").fadeOut(200);
@@ -43,7 +43,7 @@ body{
 		});
 		
 		$("#gotop").click(function(){
-			$('body,html').animate({scrollTop:390},500);
+			$('body,html').animate({scrollTop:0},500);
 			return false;
 		})
 	})
